@@ -64,3 +64,9 @@ export const optionData = [
         val: 'Data',
         checked: true,
     }];
+
+
+export const formData = [
+    ['aa', 'bb', 'cc'],
+    ['aaa', 'bbb', 'ccc']
+];

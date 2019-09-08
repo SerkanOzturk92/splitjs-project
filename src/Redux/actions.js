@@ -13,3 +13,12 @@ export const setOptionData = (optionObj) => {
         payload: optionObj
     }
 };
+
+export const setNewListData = (newListData) => {
+    return {
+        type: types.SET_NEW_LIST_DATA,
+        payload: newListData
+    }
+};
+
+

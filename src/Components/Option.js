@@ -1,7 +1,9 @@
 import React from 'react';
 import {optionData} from "../Utils/constant";
+import {setOptionData} from "../Redux/actions";
+import {connect} from "react-redux";
 
-export default class Option extends React.Component {
+class Option extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,27 +15,27 @@ export default class Option extends React.Component {
 
 
     prepareCheckBox(){
-        return this.state.columns.map((col, index)=>{
+        return this.state.option.map((col, index)=>{
             return <label key={index}><input
                 key={index}
                 type="checkbox"
                 onChange={ this.handleChecked }
                 id={col.key}
                 value={col.val}
-                checked={col.checked}
+                defaultChecked={col.checked}
             />{col.val}</label>
         })
     }
 
     handleChecked(e) {
-        let newColumns = this.state.columns;
+        let newColumns = this.state.option;
         newColumns.forEach((col,i) => {
             if(col.key === e.target.id) {
                 newColumns[i].checked = e.target.checked;
             }
         });
-
-        this.setState({columns: newColumns});
+        this.setState({option: newColumns});
+        this.props.setOptionData(JSON.stringify(newColumns));
     }
 
     render() {
@@ -49,3 +51,13 @@ export default class Option extends React.Component {
         );
     }
 }
+
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setOptionData: (info) => dispatch(setOptionData(info)),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(Option);
