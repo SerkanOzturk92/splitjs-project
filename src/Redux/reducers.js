@@ -8,9 +8,8 @@ export const HomePageReducer = (state = {}, action) => {
         case types.SET_OPTION_DATA:
             return {...state, optionObj: action.payload};
         case types.SET_NEW_LIST_DATA:
-            debugger;
             return {...state, newListData: action.payload};
-            case types.GET_LAYOUT_STATE:
+        case types.GET_LAYOUT_STATE:
             return {...state, layOutIsChanged: action.payload};
         default:
             return state;

@@ -14,8 +14,8 @@ class Form extends React.Component {
         this.submit = this.submit.bind(this);
     }
 
-    submit(e) {
-        const newData = this.state.newFormData;
+    submit() {
+        const newData = [...this.state.newFormData];
         this.props.setNewListData(newData)
     }
 
