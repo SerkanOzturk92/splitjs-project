@@ -9,52 +9,77 @@ import List from "../Components/List";
 import Split from 'react-split'
 import EmptyBox from "../Components/EmptyBox";
 import Location from "../Components/Location";
+import {setLayOutState} from "../Redux/actions";
+import Table from "../Components/Table";
+import {optionData, tableData} from "../Utils/constant";
 
 
 class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            optionObj:  {}
+            optionObj: optionData,
+            positionOfMid: '65 , 32',
+            positionOfTop: '63 , 33',
+            positionOfBottom: '63 , 33',
+            tableData: tableData,
         };
     }
 
+    componentDidMount() {
+        this.setState({
+            tableData: this.filterData(),
+        })
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(prevProps.optionObj !== this.props.optionObj){
-            // TODO: burada gelen option datasına göre filtreleme yapılacak ve table hazırlanacak.
+        if (prevProps.yearValue !== this.props.yearValue) {
             this.setState({
-                optionObj: JSON.parse(this.props.optionObj)
+                tableData: this.filterData(),
+            })
+        }
+        if (prevProps.optionObj !== this.props.optionObj) {
+            this.setState({
+                optionObj: this.props.optionObj ? JSON.parse(this.props.optionObj) : undefined
             });
         }
     }
 
+    filterData() {
+        return tableData.filter(dt => {
+            if (!this.props.yearValue) {
+                return dt.year === 2019
+            }
+            return dt.year === +this.props.yearValue
+        });
+    }
+
     onSizeChangedMid(e) {
-        console.log(e);
         this.setState({
             positionOfMid: '' + e[0] + ' , ' + e[1]
         });
-        //this.props.getLayoutLocation('mid');
+        this.props.setLayOutState(true);
     }
 
     onSizeChangedTop(e) {
-        console.log(e);
         this.setState({
             positionOfTop: '' + e[0] + ' , ' + e[1]
         });
-        //this.props.getLayoutLocation('top');
+        this.props.setLayOutState(true);
+
     }
 
     onSizeChangedBottom(e) {
-        console.log(e);
         this.setState({
             positionOfBottom: '' + e[0] + ' , ' + e[1]
         });
-        //this.props.getLayoutLocation('bot');
+        this.props.setLayOutState(true);
+
     }
 
     render() {
-        const {newFormData} = this.props;
-         return (
+        const {positionOfTop, positionOfMid, positionOfBottom} = this.state;
+        return (
             <div className='home-page'>
                 <Header/>
                 <div className='container'>
@@ -73,10 +98,14 @@ class HomePage extends Component {
                             onDragEnd={this.onSizeChangedTop.bind(this)}
                         >
                             <div className='filter-list content' id='cont1'>
-                            <DropDown/>
-                            <Option/>
+                                <DropDown/>
+                                <Option/>
+
+                                <Table data={this.state.tableData} columns={this.state.optionObj}/>
+
+
                             </div>
-                            <Location/>
+                            <Location positions={[positionOfTop, positionOfMid, positionOfBottom]}/>
                         </Split>
                         <Split
                             className='split'
@@ -107,4 +136,11 @@ const mapStateToProps = state => {
         newFormData: state.HomePageReducer.newFormData,
     }
 };
-export default HomePage = connect(mapStateToProps)(HomePage);
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setLayOutState: (info) => dispatch(setLayOutState(info))
+    }
+};
+
+export default HomePage = connect(mapStateToProps, mapDispatchToProps)(HomePage);

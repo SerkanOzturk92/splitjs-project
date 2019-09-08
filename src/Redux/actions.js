@@ -21,4 +21,9 @@ export const setNewListData = (newListData) => {
     }
 };
 
-
+export const setLayOutState = (layOutIsChanged) => {
+    return {
+        type: types.GET_LAYOUT_STATE,
+        payload: layOutIsChanged
+    }
+};
