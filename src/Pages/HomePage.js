@@ -23,7 +23,9 @@ class HomePage extends Component {
             positionOfTop: '63 , 33',
             positionOfBottom: '63 , 33',
             tableData: tableData,
+            formIsVisible: false
         };
+        this.onClick = this.onClick.bind(this);
     }
 
     componentDidMount() {
@@ -77,6 +79,12 @@ class HomePage extends Component {
 
     }
 
+    onClick() {
+        this.setState({
+            formIsVisible: true,
+        })
+    }
+
     render() {
         const {positionOfTop, positionOfMid, positionOfBottom} = this.state;
         return (
@@ -115,7 +123,11 @@ class HomePage extends Component {
                         >
                             <div className='basic-form content ' id='cont3'>
                                 <List/>
-                                <Form/>
+                                {
+                                    this.state.formIsVisible &&
+                                    <Form/>
+                                }
+                                <button onClick={this.onClick}>Yeni ekle</button>
                             </div>
                             <EmptyBox/>
                         </Split>
