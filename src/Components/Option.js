@@ -2,6 +2,7 @@ import React from 'react';
 import {optionData} from "../Utils/constant";
 import {setOptionData} from "../Redux/actions";
 import {connect} from "react-redux";
+import OptionIcon from "../assets/options.svg";
 
 class Option extends React.Component {
     constructor(props) {
@@ -42,7 +43,7 @@ class Option extends React.Component {
         return (
             <div className='option'>
                 <div className='option-container'>
-                    <span className='option-icon'>*</span>
+                    <img src={OptionIcon} className='small-icon' alt=''/>
                     <div className='option-box'>
                         {this.prepareCheckBox()}
                     </div>
