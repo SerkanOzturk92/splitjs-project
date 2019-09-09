@@ -134,7 +134,6 @@ class HomePage extends Component {
                     </Split>
                     <Footer/>
                 </div>
-
             </div>
         );
     }
