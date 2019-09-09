@@ -131,9 +131,8 @@ class HomePage extends Component {
                             </div>
                             <EmptyBox/>
                         </Split>
-
-
-                    </Split>                        <Footer/>
+                    </Split>
+                    <Footer/>
                 </div>
 
             </div>
